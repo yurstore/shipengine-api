@@ -1,0 +1,24 @@
+{
+    "name": "yurstore/shipengine-api",
+    "description": "Yurstore Shipengine Package",
+	"version": "1.0.0",
+    "authors": [
+        {
+            "name": "Tony Paeno",
+            "email": "tony@yurstore.com"
+        }
+    ],
+	"autoload": {
+		"psr-4": {
+			"Yurstore\\ShipEngineAPI\\": "src/"
+		}
+	},
+	"extra": {
+		"laravel": {
+			"providers": [
+				"yurstore\\shipengine-api\\src\\YurstoreShipEngineServiceProvider"
+			]
+		}
+	},
+    "require": {}
+}
