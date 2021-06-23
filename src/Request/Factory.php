@@ -59,6 +59,8 @@ class Factory
         return self::initRequest($url, [
             CURLOPT_POST       => true,
             CURLOPT_POSTFIELDS => json_encode([
+		'label_format' => 'zpl',
+		'label_layout' => '4x6',
                 'shipment'   => $shipment->toArray(),
                 'test_label' => $test
             ])
