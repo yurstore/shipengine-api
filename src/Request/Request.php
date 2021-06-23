@@ -26,7 +26,7 @@ class Request
 
         $data = json_decode($response, true);
 
-        if (isset($data['errors']) && !empty($data['errors'])) {
+        if (isset($data['errors']) && !empty($data['errors']) && count($data['errors']) > 0) {
             throw Exception::response($data);
         }
 		
