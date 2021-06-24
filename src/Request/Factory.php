@@ -39,6 +39,15 @@ class Factory
         return self::initRequest($url, [
             CURLOPT_HTTPGET => true
         ]);
+    }		
+	
+    public static function getLabelFromTracking($tracking_number)
+    {		
+        $url = self::buildUrl('labels?$tracking_number='.$tracking_number);
+
+        return self::initRequest($url, [
+            CURLOPT_HTTPGET => true
+        ]);
     }
 
     public static function getRates($weight, $addressTo, $addressFrom, $options)
@@ -55,21 +64,22 @@ class Factory
                 'rate_options' => $options
             ])
         ]);
-    }	
+    }
 	
     public static function createLabel($weight, $addressTo, $addressFrom, $service_code, $test = false)
-	{
-		$package = new Package($weight);
-        $shipment = new Shipment($addressTo, $addressFrom, [$package]);
-		$shipment->setService($service_code);
-		
-        $url = self::buildUrl('labels');
+    {
+	$package = new Package($weight);
+	$shipment = new Shipment($addressTo, $addressFrom, [$package]);
+	$shipment->setService($service_code);
+
+	$url = self::buildUrl('labels');
 
         return self::initRequest($url, [
             CURLOPT_POST       => true,
             CURLOPT_POSTFIELDS => json_encode([
 		'label_format' => 'pdf',
 		'label_layout' => '4x6',
+	    	'label_download_type' => 'url',
                 'shipment'   => $shipment->toArray(),
                 'test_label' => $test
             ])
