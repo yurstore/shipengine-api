@@ -32,6 +32,15 @@ class Factory
         ]);
     }
 
+    public static function getShipment($shipment_id)
+    {
+        $url = self::buildUrl("shipments/".$shipment_id);
+
+        return self::initRequest($url, [
+            CURLOPT_HTTPGET => true
+        ]);
+    }
+
     public static function getRates($weight, $addressTo, $addressFrom, $options)
     {
 		$package = new Package($weight);
