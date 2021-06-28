@@ -10,10 +10,13 @@ class Package
     protected $weight;
 
     protected $weightUnit = self::UNIT_POUND;
+    
+    protected $reference;
 
-    public function __construct($weight, $weightUnit = self::UNIT_POUND)
+    public function __construct($weight, $reference, $weightUnit = self::UNIT_POUND)
     {
         $this->weight = $weight;
+        $this->reference = $reference;
         $this->weightUnit = $weightUnit;
     }
 
@@ -25,5 +28,10 @@ class Package
     public function getWeightUnit()
     {
         return $this->weightUnit;
+    }
+    
+    public function getReferenceNumber()
+    {
+        return $this->reference;
     }
 }
