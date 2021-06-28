@@ -53,7 +53,10 @@ class Shipment
                     'weight' => [
                         'value' => $package->getWeightAmount(),
                         'unit'  => $package->getWeightUnit()
-                    ]
+                    ],
+		    'label_messages' => [
+			'reference1' => $package->getReferenceNumber()
+		    ]
                 ];
             }, $this->packages)
         ];
