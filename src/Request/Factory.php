@@ -66,9 +66,9 @@ class Factory
         ]);
     }
 	
-    public static function createLabel($weight, $addressTo, $addressFrom, $service_code, $test = false)
+    public static function createLabel($weight, $addressTo, $addressFrom, $service_code, $reference, $test = false)
     {
-	$package = new Package($weight);
+	$package = new Package($weight, $reference);
 	$shipment = new Shipment($addressTo, $addressFrom, [$package]);
 	$shipment->setService($service_code);
 
