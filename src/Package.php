@@ -13,7 +13,7 @@ class Package
     
     protected $reference;
 
-    public function __construct($weight, $reference, $weightUnit = self::UNIT_POUND)
+    public function __construct($weight, $reference = null, $weightUnit = self::UNIT_POUND)
     {
         $this->weight = $weight;
         $this->reference = $reference;
@@ -32,6 +32,6 @@ class Package
     
     public function getReferenceNumber()
     {
-        return $this->reference;
+        return $this->reference ?? null;
     }
 }
