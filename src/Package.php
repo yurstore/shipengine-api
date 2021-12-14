@@ -20,6 +20,13 @@ class Package
         $this->weightUnit = $weightUnit;
     }
 
+    public function addToShipment($addressTo, $addressFrom, $service_code = 'ups_ground')
+    {        
+        $shipment = new Shipment($addressTo, $addressFrom, [$this]);
+        $shipment->setService($service_code);
+        return $shipment;
+    }
+
     public function getWeightAmount()
     {
         return $this->weight;

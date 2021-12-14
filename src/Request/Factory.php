@@ -153,4 +153,9 @@ class Factory
     {
         return self::$api_url . $endpoint;
     }
+
+    public function package($weight, $reference)
+    {
+        return new Package($weight, $reference);
+    }
 }
