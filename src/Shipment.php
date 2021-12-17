@@ -53,8 +53,8 @@ class Shipment
 
     public function createLabel($test = false)
     {
-        $url = Yurstore\ShipEngineAPI\ShipEngineRequest\Factory::buildUrl('labels');
-        return Yurstore\ShipEngineAPI\ShipEngineRequest\Factory::initRequest($url, [
+        $url = ShipEngineRequest\Factory::buildUrl('labels');
+        return ShipEngineRequest\Factory::initRequest($url, [
             CURLOPT_POST       => true,
             CURLOPT_POSTFIELDS => json_encode([
                 'label_format' => 'pdf',
