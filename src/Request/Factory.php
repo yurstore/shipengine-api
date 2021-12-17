@@ -68,17 +68,33 @@ class Factory
 	
     public static function createLabel($weight, $addressTo, $addressFrom, $service_code, $reference, $test = false)
     {
-	$package = new Package($weight, $reference);
-	$shipment = new Shipment($addressTo, $addressFrom, [$package]);
-	$shipment->setService($service_code);
+        $package = new Package($weight, $reference);
+        $shipment = new Shipment($addressTo, $addressFrom, [$package]);
+        $shipment->setService($service_code);
 
-	$url = self::buildUrl('labels');
+	    $url = self::buildUrl('labels');
 
         return self::initRequest($url, [
             CURLOPT_POST       => true,
             CURLOPT_POSTFIELDS => json_encode([
-		'label_format' => 'pdf',
-		'label_layout' => '4x6',
+            'label_format' => 'pdf',
+            'label_layout' => '4x6',
+	    	'label_download_type' => 'url',
+                'shipment'   => $shipment->toArray(),
+                'test_label' => $test
+            ])
+        ]);
+    }
+	
+    public static function createLabelWithShipment($shipment, $test = false)
+    {
+	    $url = self::buildUrl('labels');
+
+        return self::initRequest($url, [
+            CURLOPT_POST       => true,
+            CURLOPT_POSTFIELDS => json_encode([
+            'label_format' => 'pdf',
+            'label_layout' => '4x6',
 	    	'label_download_type' => 'url',
                 'shipment'   => $shipment->toArray(),
                 'test_label' => $test
