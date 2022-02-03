@@ -16,7 +16,6 @@ class Response extends Exception
 
         $message = sprintf("ShipEngine Request ID %s response contained %d error(s). ", $this->request_id, count($this->errors));
         $total_message = $message . implode(' ', $this->errors);
-        error_message($total_message);
         return parent::__construct($total_message);
     }
 
