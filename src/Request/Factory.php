@@ -174,4 +174,16 @@ class Factory
     {
         return new Package($weight, $reference);
     }
+
+    public static function shipment($weights, $addressTo, $addressFrom, $advanced_options = null) 
+    {
+        $shipment = new Shipment($addressTo, $addressFrom, [], $advanced_options);
+
+        foreach($weights as $weight)
+        {
+            $shipment->addPackage(New Package($weight));
+        }
+
+        return $shipment;
+    }
 }
