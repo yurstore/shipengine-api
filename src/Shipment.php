@@ -80,6 +80,13 @@ class Shipment
                 ];
             }, $this->packages)
         ];
+        if($service_code == 'expedited_mail_innovations')
+        {
+            foreach($array['packages'] as $index => $package)
+            {
+                $array['packages'][$index]['package_code'] = 'mi_standard_flat';
+            }
+        }
         if(!empty($this->advanced_options))
         {
             $array['advanced_options'] = $this->advanced_options;
