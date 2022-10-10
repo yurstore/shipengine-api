@@ -80,18 +80,6 @@ class Shipment
                 ];
             }, $this->packages)
         ];
-        foreach($array['packages'] as $index => $package)
-        {
-            if(!empty($package->getHeightAmount()))
-            {
-                $array['packages'][$index]['dimensions'] = [
-                    'height' => $package->getHeightAmount(),
-                    'width' => $package->getWidthAmount(),
-                    'length' => $package->getLengthAmount(),
-                    'unit' => $package->getDimensionUnit(),
-                ];
-            }
-        }
         if(!empty($this->advanced_options))
         {
             $array['advanced_options'] = $this->advanced_options;
