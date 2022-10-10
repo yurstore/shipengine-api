@@ -68,20 +68,23 @@ class Shipment
                         'value' => $package->getWeightAmount(),
                         'unit'  => $package->getWeightUnit()
                     ],
-		    'label_messages' => [
-			'reference1' => $package->getReferenceNumber()
-		    ]
+                    'label_messages' => [
+                        'reference1' => $package->getReferenceNumber()
+                    ]
                 ];
             }, $this->packages)
         ];
-        if(!empty($package->getHeightAmount()))
+        foreach($array['packages'] as $index => $package)
         {
-            $array['packages']['dimensions'] = [
-                'height' => $package->getHeightAmount(),
-                'width' => $package->getWidthAmount(),
-                'length' => $package->getLengthAmount(),
-                'unit' => $package->getDimensionUnit(),
-            ];
+            if(!empty($package->getHeightAmount()))
+            {
+                $array['packages'][$index]['dimensions'] = [
+                    'height' => $package->getHeightAmount(),
+                    'width' => $package->getWidthAmount(),
+                    'length' => $package->getLengthAmount(),
+                    'unit' => $package->getDimensionUnit(),
+                ];
+            }
         }
         if(!empty($this->advanced_options))
         {
