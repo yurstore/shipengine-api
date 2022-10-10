@@ -74,6 +74,15 @@ class Shipment
                 ];
             }, $this->packages)
         ];
+        if(!empty($package->getHeightAmount()))
+        {
+            $array['packages']['dimensions'] = [
+                'height' => $package->getHeightAmount(),
+                'width' => $package->getWidthAmount(),
+                'length' => $package->getLengthAmount(),
+                'unit' => $package->getDimensionUnit(),
+            ];
+        }
         if(!empty($this->advanced_options))
         {
             $array['advanced_options'] = $this->advanced_options;

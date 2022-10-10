@@ -6,10 +6,19 @@ class Package
 {
     const UNIT_OUNCE = 'ounce';
     const UNIT_POUND = 'pound';
+    const UNIT_INCH = 'inch';
 
     protected $weight;
 
     protected $weightUnit = self::UNIT_POUND;
+
+    protected $height;
+
+    protected $width;
+
+    protected $length;
+
+    protected $dimensionUnit = self::UNIT_INCH;
     
     protected $reference;
 
@@ -18,6 +27,13 @@ class Package
         $this->weight = $weight;
         $this->reference = $reference;
         $this->weightUnit = $weightUnit;
+    }
+
+    public function addDimensions($height, $width, $length)
+    {
+        $this->height = $height;
+        $this->width = $width;
+        $this->length = $length;
     }
 
     public function addToShipment($addressTo, $addressFrom, $service_code = 'ups_ground')
@@ -35,6 +51,26 @@ class Package
     public function getWeightUnit()
     {
         return $this->weightUnit;
+    }
+
+    public function getHeightAmount()
+    {
+        return $this->height;
+    }
+
+    public function getWidthAmount()
+    {
+        return $this->width;
+    }
+
+    public function getLengthAmount()
+    {
+        return $this->length;
+    }
+
+    public function getDimensionUnit()
+    {
+        return $this->dimensionUnit;
     }
     
     public function getReferenceNumber()
