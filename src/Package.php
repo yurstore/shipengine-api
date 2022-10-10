@@ -12,11 +12,11 @@ class Package
 
     protected $weightUnit = self::UNIT_POUND;
 
-    protected $height;
+    protected $height = 1;
 
-    protected $width;
+    protected $width = 8;
 
-    protected $length;
+    protected $length = 12;
 
     protected $dimensionUnit = self::UNIT_INCH;
     

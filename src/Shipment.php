@@ -68,6 +68,12 @@ class Shipment
                         'value' => $package->getWeightAmount(),
                         'unit'  => $package->getWeightUnit()
                     ],
+                    'dimensions' => [
+                        'height' => $package->getHeightAmount(),
+                        'width' => $package->getWidthAmount(),
+                        'length' => $package->getLengthAmount(),
+                        'unit' => $package->getDimensionUnit(),
+                    ],
                     'label_messages' => [
                         'reference1' => $package->getReferenceNumber()
                     ]
