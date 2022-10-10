@@ -80,7 +80,7 @@ class Shipment
                 ];
             }, $this->packages)
         ];
-        if($service_code == 'expedited_mail_innovations')
+        if($this->service_code == 'expedited_mail_innovations')
         {
             foreach($array['packages'] as $index => $package)
             {
