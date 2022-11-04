@@ -175,13 +175,13 @@ class Factory
         return new Package($weight, $reference);
     }
 
-    public static function shipment($weights, $addressTo, $addressFrom, $advanced_options = null) 
+    public static function shipment($weights, $addressTo, $addressFrom, $reference = null, $advanced_options = null) 
     {
         $shipment = new Shipment($addressTo, $addressFrom, [], $advanced_options);
 
         foreach($weights as $weight)
         {
-            $shipment->addPackage(New Package($weight));
+            $shipment->addPackage(New Package($weight, $reference));
         }
 
         return $shipment;
