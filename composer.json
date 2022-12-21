@@ -16,7 +16,7 @@
 	"extra": {
 		"laravel": {
 			"providers": [
-				"yurstore\\shipengine-api\\src\\YurstoreShipEngineServiceProvider"
+				"Yurstore\\ShipEngineAPI\\YurstoreShipEngineServiceProvider"
 			]
 		}
 	},
