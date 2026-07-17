@@ -66,10 +66,34 @@ class Factory
         ]);
     }
 	
-    public static function createLabel($weight, $addressTo, $addressFrom, $service_code, $reference, $test = false)
+    public static function createLabel($weights, $addressTo, $addressFrom, $service_code, $reference, $test = false)
     {
-        $package = new Package($weight, $reference);
-        $shipment = new Shipment($addressTo, $addressFrom, [$package]);
+        $weights = is_array($weights) ? $weights : [$weights];
+
+        if (empty($weights)) {
+            throw new \InvalidArgumentException(
+                'At least one package weight is required to retrieve rates.'
+            );
+        }
+        $packages = [];
+        
+        foreach ($weights as $weight) {
+            if (!is_numeric($weight)) {
+                throw new \InvalidArgumentException(
+                    'Every package weight must be numeric.'
+                );
+            }
+
+            $packages[] = new Package($weight, $reference);
+        }
+
+        $shipment = new Shipment(
+            $addressTo,
+            $addressFrom,
+            $packages,
+            null,
+        );
+        
         $shipment->setService($service_code);
 
 	    $url = self::buildUrl('labels');
