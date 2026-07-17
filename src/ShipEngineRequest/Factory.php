@@ -50,23 +50,7 @@ class Factory
         ]);
     }
 
-    public static function getRates($weight, $addressTo, $addressFrom, $options)
-    {
-		$package = new Package($weight);
-        $shipment = new Shipment($addressTo, $addressFrom, [$package]);
-		
-        $url = self::buildUrl("rates");
-
-        return self::initRequest($url, [
-            CURLOPT_POST       => true,
-            CURLOPT_POSTFIELDS => json_encode([
-                'shipment'     => $shipment->toArray(),
-                'rate_options' => $options
-            ])
-        ]);
-    }
-	
-    public static function createLabel($weights, $addressTo, $addressFrom, $service_code, $reference, $test = false)
+    public static function getRates($weights, $addressTo, $addressFrom, $options)
     {
         $weights = is_array($weights) ? $weights : [$weights];
 
@@ -84,7 +68,7 @@ class Factory
                 );
             }
 
-            $packages[] = new Package($weight, $reference);
+            $packages[] = new Package($weight);
         }
 
         $shipment = new Shipment(
@@ -93,7 +77,22 @@ class Factory
             $packages,
             null,
         );
-        
+
+        $url = self::buildUrl("rates");
+
+        return self::initRequest($url, [
+            CURLOPT_POST       => true,
+            CURLOPT_POSTFIELDS => json_encode([
+                'shipment'     => $shipment->toArray(),
+                'rate_options' => $options
+            ])
+        ]);
+    }
+	
+    public static function createLabel($weight, $addressTo, $addressFrom, $service_code, $reference, $test = false)
+    {
+        $package = new Package($weight, $reference);
+        $shipment = new Shipment($addressTo, $addressFrom, [$package]);
         $shipment->setService($service_code);
 
 	    $url = self::buildUrl('labels');
