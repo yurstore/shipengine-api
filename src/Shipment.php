@@ -2,6 +2,8 @@
 
 namespace Yurstore\ShipEngineAPI;
 
+use Yurstore\ShipEngineAPI\Enums\Confirmation;
+
 class Shipment
 {
     protected $to;
@@ -14,36 +16,14 @@ class Shipment
 
 	protected $service_code = 'ups_ground';
 
-    public const CONFIRMATION_NONE = 'none';
-    public const CONFIRMATION_DELIVERY = 'delivery';
-    public const CONFIRMATION_SIGNATURE = 'signature';
-    public const CONFIRMATION_ADULT_SIGNATURE = 'adult_signature';
-    public const CONFIRMATION_DIRECT_SIGNATURE = 'direct_signature';
-    public const CONFIRMATION_DELIVERY_MAILED = 'delivery_mailed';
-    public const CONFIRMATION_VERBAL = 'verbal_confirmation';
-    public const CONFIRMATION_DELIVERY_CODE = 'delivery_code';
-    public const CONFIRMATION_AGE_VERIFICATION_16_PLUS = 'age_verification_16_plus';
-
-    public const CONFIRMATIONS = [
-        self::CONFIRMATION_NONE,
-        self::CONFIRMATION_DELIVERY,
-        self::CONFIRMATION_SIGNATURE,
-        self::CONFIRMATION_ADULT_SIGNATURE,
-        self::CONFIRMATION_DIRECT_SIGNATURE,
-        self::CONFIRMATION_DELIVERY_MAILED,
-        self::CONFIRMATION_VERBAL,
-        self::CONFIRMATION_DELIVERY_CODE,
-        self::CONFIRMATION_AGE_VERIFICATION_16_PLUS,
-    ];
-
-    protected $confirmation = self::CONFIRMATION_NONE;
+    protected string $confirmation = Confirmation::DEFAULT;
 
     public function __construct(
         $to, 
         $from, 
         array $packages = [], 
         $advanced_options = null,
-        $confirmation = "none",
+        string $confirmation = Confirmation::DEFAULT,
     ) {
         $this->to = $to;
         $this->from = $from;
@@ -83,12 +63,12 @@ class Shipment
 
     public function setConfirmation($confirmation)
     {
-        if (!in_array($confirmation, self::CONFIRMATIONS, true)) {
+        if (Confirmation::tryFrom($confirmation) === null) {
             throw new \InvalidArgumentException(
                 sprintf(
                     'Unsupported shipment confirmation "%s". Expected one of: %s.',
                     $confirmation,
-                    implode(', ', self::CONFIRMATIONS)
+                    implode(', ', Confirmation::values())
                 )
             );
         }
@@ -98,7 +78,7 @@ class Shipment
         return $this;
     }
 
-    public function getConfirmation()
+    public function getConfirmation(): string
     {
         return $this->confirmation;
     }
