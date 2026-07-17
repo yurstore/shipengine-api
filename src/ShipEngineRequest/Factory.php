@@ -2,6 +2,7 @@
 
 namespace Yurstore\ShipEngineAPI\ShipEngineRequest;
 
+use Yurstore\ShipEngineAPI\Enums\Confirmation;
 use Yurstore\ShipEngineAPI\Package;
 use Yurstore\ShipEngineAPI\Shipment;
 
@@ -89,10 +90,22 @@ class Factory
         ]);
     }
 	
-    public static function createLabel($weight, $addressTo, $addressFrom, $service_code, $reference, $test = false)
-    {
+    public static function createLabel(
+        $weight,
+        $addressTo,
+        $addressFrom,
+        $service_code,
+        $reference,
+        $test = false,
+        string $confirmation = Confirmation::DEFAULT
+    ) {
         $package = new Package($weight, $reference);
-        $shipment = new Shipment($addressTo, $addressFrom, [$package]);
+        $shipment = new Shipment(
+            to: $addressTo,
+            from: $addressFrom,
+            packages: [$package],
+            confirmation: $confirmation,
+        );
         $shipment->setService($service_code);
 
 	    $url = self::buildUrl('labels');
@@ -198,9 +211,21 @@ class Factory
         return new Package($weight, $reference);
     }
 
-    public static function shipment($weights, $addressTo, $addressFrom, $reference = null, $advanced_options = null) 
-    {
-        $shipment = new Shipment($addressTo, $addressFrom, [], $advanced_options);
+    public static function shipment(
+        $weights,
+        $addressTo,
+        $addressFrom,
+        $reference = null,
+        $advanced_options = null,
+        string $confirmation = Confirmation::DEFAULT
+    ) {
+        $shipment = new Shipment(
+            to: $addressTo,
+            from: $addressFrom,
+            packages: [],
+            advanced_options: $advanced_options,
+            confirmation: $confirmation,
+        );
 
         foreach($weights as $weight)
         {
