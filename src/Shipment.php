@@ -2,6 +2,8 @@
 
 namespace Yurstore\ShipEngineAPI;
 
+use Yurstore\ShipEngineAPI\Enums\Confirmation;
+
 class Shipment
 {
     protected $to;
@@ -11,11 +13,18 @@ class Shipment
     protected $packages = [];
 
     protected $advanced_options = null;
-	
+
 	protected $service_code = 'ups_ground';
 
-    public function __construct($to, $from, array $packages = [], $advanced_options = null)
-    {
+    protected string $confirmation = Confirmation::DEFAULT;
+
+    public function __construct(
+        $to, 
+        $from, 
+        array $packages = [], 
+        $advanced_options = null,
+        string $confirmation = Confirmation::DEFAULT,
+    ) {
         $this->to = $to;
         $this->from = $from;
 
@@ -24,6 +33,7 @@ class Shipment
         }
 
         $this->advanced_options = $advanced_options;
+        $this->setConfirmation($confirmation);
     }
 
     public function addPackage(Package $package)
@@ -51,6 +61,28 @@ class Shipment
         $this->advanced_options = $advanced_options;
     }
 
+    public function setConfirmation($confirmation)
+    {
+        if (Confirmation::tryFrom($confirmation) === null) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    'Unsupported shipment confirmation "%s". Expected one of: %s.',
+                    $confirmation,
+                    implode(', ', Confirmation::values())
+                )
+            );
+        }
+
+        $this->confirmation = $confirmation;
+
+        return $this;
+    }
+
+    public function getConfirmation(): string
+    {
+        return $this->confirmation;
+    }
+
     public function createLabel($test = false)
     {
         return ShipEngineRequest\Factory::createLabelWithShipment($this, $test);
@@ -60,6 +92,7 @@ class Shipment
     {
         $array = [
 			'service_code' => $this->service_code,
+            'confirmation' => $this->confirmation,
             'ship_to'   => $this->to,
             'ship_from' => $this->from,
             'packages'  => array_map(function ($package) {
