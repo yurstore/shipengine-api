@@ -234,4 +234,13 @@ class Factory
 
         return $shipment;
     }
+
+    public static function void(string $label_id)
+    {
+        $url = self::buildUrl(sprintf("labels/%s/void", $label_id));
+
+        return self::initRequest($url, [
+            CURLOPT_CUSTOMREQUEST => 'PUT',
+        ]);
+    }
 }
