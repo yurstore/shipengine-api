@@ -192,6 +192,8 @@ class Factory
         $params = $params + [
                 CURLOPT_URL            => $url,
                 CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_CONNECTTIMEOUT => config('shipengine.connect_timeout', Request::DEFAULT_CONNECT_TIMEOUT),
+                CURLOPT_TIMEOUT        => config('shipengine.timeout', Request::DEFAULT_TIMEOUT),
                 CURLOPT_HTTPHEADER     => [
                     "Content-Type: application/json",
                     "api-key: " . config('shipengine.api_key')

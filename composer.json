@@ -1,7 +1,7 @@
 {
     "name": "yurstore/shipengine-api",
     "description": "Yurstore Shipengine Package",
-	"version": "1.2.1",
+	"version": "1.2.2",
     "authors": [
         {
             "name": "Tony Paeno",
